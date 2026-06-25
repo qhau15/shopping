@@ -1,0 +1,9 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "bash docker-entrypoint.sh"
+healthcheckPath = "/api/products"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"

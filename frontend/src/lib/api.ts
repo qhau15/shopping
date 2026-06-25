@@ -1,7 +1,9 @@
 import { Banner, Category, Collection, Product } from './types'
 
 const serverApi = () =>
-  typeof window === 'undefined' ? (process.env.API_URL || 'http://nginx') : ''
+  typeof window === 'undefined'
+    ? (process.env.API_URL || 'http://nginx')
+    : (process.env.NEXT_PUBLIC_API_URL || '')
 
 // Public API
 export async function getProducts(): Promise<Product[]> {
