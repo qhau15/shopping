@@ -32,6 +32,5 @@ RUN mkdir -p bootstrap/cache storage/app/public storage/framework/cache \
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-EXPOSE 9000
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["php-fpm"]
+EXPOSE 8080
+CMD ["/bin/sh", "/usr/local/bin/docker-entrypoint.sh"]
