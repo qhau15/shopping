@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { adminGetProduct } from '@/lib/api'
 import { Product } from '@/lib/types'
-import ProductForm from '@/components/tmt/admin/ProductForm'
+import ProductForm from '@/components/admin/ProductForm'
 
 export default function EditProductPage() {
   const params = useParams()
