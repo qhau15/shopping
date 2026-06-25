@@ -267,3 +267,4 @@ export async function adminToggleCollection(id: number) {
   })
   return res.json()
 }
+// deploy
