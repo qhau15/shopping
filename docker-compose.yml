@@ -1,0 +1,63 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - storage:/var/www/html/storage/app/public:ro
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    volumes:
+      - storage:/var/www/html/storage/app/public
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      LOG_CHANNEL: "null"
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: shopping
+      DB_USERNAME: shopping
+      DB_PASSWORD: shopping123
+      FILESYSTEM_DISK: public
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_FB_PAGE: ${FB_PAGE:-https://facebook.com}
+    environment:
+      NODE_ENV: production
+      API_URL: http://nginx
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: shopping
+      MYSQL_USER: shopping
+      MYSQL_PASSWORD: shopping123
+      MYSQL_ROOT_PASSWORD: root123
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "shopping", "-pshopping123"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  storage:

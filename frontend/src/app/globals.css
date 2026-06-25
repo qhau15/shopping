@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    color: #0A0A0A;
+    background-color: #FAFAF7;
+    -webkit-tap-highlight-color: transparent;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-main), 'Be Vietnam Pro', sans-serif;
+    font-weight: 400;
+  }
+  button, a {
+    touch-action: manipulation;
+  }
+  img {
+    -webkit-user-drag: none;
+  }
+}
+
+/* Keyframes */
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.09); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes blink-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+@keyframes petalFall {
+  0%   { transform: translateY(-30px) translateX(0px) rotate(0deg) scale(1); opacity: 0; }
+  6%   { opacity: 0.7; }
+  25%  { transform: translateY(25vh)  translateX(calc(var(--petal-drift, 40px) * 0.4))  rotate(80deg)  scale(0.97); }
+  50%  { transform: translateY(50vh)  translateX(calc(var(--petal-drift, 40px) * -0.2)) rotate(190deg) scale(0.95); }
+  75%  { transform: translateY(76vh)  translateX(calc(var(--petal-drift, 40px) * 0.7))  rotate(300deg) scale(0.92); }
+  92%  { opacity: 0.45; }
+  100% { transform: translateY(108vh) translateX(calc(var(--petal-drift, 40px) * 0.2))  rotate(400deg) scale(0.85); opacity: 0; }
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Banner */
+.banner-title    { animation: fadeInUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
+.banner-subtitle { animation: fadeInUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
+.banner-shimmer  {
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
+  background-size: 200% 100%;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Petals */
+.petal {
+  animation-name: petalFall;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Page reveal */
+.reveal {
+  animation: revealUp 0.8s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* Scrollbar hide */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+@layer components {
+  /* Luxury button — no border-radius, all-caps, tracked */
+  .btn-primary {
+    @apply bg-warm-black hover:opacity-80 text-white font-sans font-medium
+           tracking-[0.2em] uppercase text-[11px] py-4 px-10
+           transition-all duration-300 inline-flex items-center gap-3;
+  }
+  .btn-outline {
+    @apply border border-warm-black text-warm-black hover:bg-warm-black hover:text-white
+           font-sans font-medium tracking-[0.2em] uppercase text-[11px] py-4 px-10
+           transition-all duration-300 inline-flex items-center gap-3;
+  }
+  .btn-ghost {
+    @apply text-warm-gray-400 hover:text-warm-black font-sans font-medium
+           tracking-[0.2em] uppercase text-[11px] transition-colors duration-200
+           border-b border-transparent hover:border-warm-black pb-0.5;
+  }
+
+  /* Price */
+  .price-tag      { @apply text-warm-black font-serif text-2xl font-light; }
+  .price-original { @apply text-warm-gray-400 line-through text-sm font-sans; }
+
+  /* Badge */
+  .badge-discount {
+    @apply bg-warm-black text-white text-[9px] font-sans font-medium px-2 py-0.5 tracking-widest;
+    animation: blink-dot 3s ease-in-out infinite;
+  }
+
+  /* Luxury label (section headings) */
+  .label-luxury {
+    @apply text-[10px] tracking-[0.35em] uppercase text-warm-gray-400 font-sans font-medium;
+  }
+
+  /* Thin horizontal rule */
+  .rule { @apply h-px w-full bg-warm-gray-200; }
+}
