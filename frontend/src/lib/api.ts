@@ -40,13 +40,15 @@ export async function getCollections(): Promise<Collection[]> {
 }
 
 // Admin API (client-side only)
+const adminApi = () => process.env.NEXT_PUBLIC_API_URL || ''
+
 function authHeader(): HeadersInit {
   const token = localStorage.getItem('admin_token')
   return token ? { Authorization: `Bearer ${token}` } : {}
 }
 
 export async function adminLogin(email: string, password: string) {
-  const res = await fetch('/api/admin/login', {
+  const res = await fetch(`${adminApi()}/api/admin/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -55,25 +57,25 @@ export async function adminLogin(email: string, password: string) {
 }
 
 export async function adminLogout() {
-  await fetch('/api/admin/logout', { method: 'POST', headers: authHeader() })
+  await fetch(`${adminApi()}/api/admin/logout`, { method: 'POST', headers: authHeader() })
   localStorage.removeItem('admin_token')
 }
 
 // Products
 export async function adminGetProducts(): Promise<Product[]> {
-  const res = await fetch('/api/admin/products', { headers: authHeader() })
+  const res = await fetch(`${adminApi()}/api/admin/products`, { headers: authHeader() })
   if (!res.ok) throw new Error('Unauthorized')
   return res.json()
 }
 
 export async function adminGetProduct(id: number): Promise<Product> {
-  const res = await fetch(`/api/admin/products/${id}`, { headers: authHeader() })
+  const res = await fetch(`${adminApi()}/api/admin/products/${id}`, { headers: authHeader() })
   if (!res.ok) throw new Error('Not found')
   return res.json()
 }
 
 export async function adminCreateProduct(data: object): Promise<Product> {
-  const res = await fetch('/api/admin/products', {
+  const res = await fetch(`${adminApi()}/api/admin/products`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...authHeader() },
     body: JSON.stringify(data),
@@ -84,7 +86,7 @@ export async function adminCreateProduct(data: object): Promise<Product> {
 }
 
 export async function adminUpdateProduct(id: number, data: object): Promise<Product> {
-  const res = await fetch(`/api/admin/products/${id}`, {
+  const res = await fetch(`${adminApi()}/api/admin/products/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...authHeader() },
     body: JSON.stringify(data),
@@ -95,7 +97,7 @@ export async function adminUpdateProduct(id: number, data: object): Promise<Prod
 }
 
 export async function adminDeleteProduct(id: number) {
-  const res = await fetch(`/api/admin/products/${id}`, {
+  const res = await fetch(`${adminApi()}/api/admin/products/${id}`, {
     method: 'DELETE',
     headers: authHeader(),
   })
@@ -103,7 +105,7 @@ export async function adminDeleteProduct(id: number) {
 }
 
 export async function adminToggleProduct(id: number) {
-  const res = await fetch(`/api/admin/products/${id}/toggle`, {
+  const res = await fetch(`${adminApi()}/api/admin/products/${id}/toggle`, {
     method: 'POST',
     headers: authHeader(),
   })
@@ -114,7 +116,7 @@ export async function adminUploadImage(productId: number, file: File, isPrimary:
   const form = new FormData()
   form.append('image', file)
   form.append('is_primary', isPrimary ? '1' : '0')
-  const res = await fetch(`/api/admin/products/${productId}/images`, {
+  const res = await fetch(`${adminApi()}/api/admin/products/${productId}/images`, {
     method: 'POST',
     headers: authHeader(),
     body: form,
@@ -125,7 +127,7 @@ export async function adminUploadImage(productId: number, file: File, isPrimary:
 }
 
 export async function adminDeleteImage(imageId: number) {
-  const res = await fetch(`/api/admin/images/${imageId}`, {
+  const res = await fetch(`${adminApi()}/api/admin/images/${imageId}`, {
     method: 'DELETE',
     headers: authHeader(),
   })
@@ -133,7 +135,7 @@ export async function adminDeleteImage(imageId: number) {
 }
 
 export async function adminSetPrimaryImage(imageId: number) {
-  const res = await fetch(`/api/admin/images/${imageId}/primary`, {
+  const res = await fetch(`${adminApi()}/api/admin/images/${imageId}/primary`, {
     method: 'POST',
     headers: authHeader(),
   })
@@ -142,7 +144,7 @@ export async function adminSetPrimaryImage(imageId: number) {
 
 // Banners
 export async function adminGetBanners(): Promise<Banner[]> {
-  const res = await fetch('/api/admin/banners', { headers: authHeader() })
+  const res = await fetch(`${adminApi()}/api/admin/banners`, { headers: authHeader() })
   if (!res.ok) throw new Error('Unauthorized')
   return res.json()
 }
@@ -158,7 +160,7 @@ export async function adminUploadBanner(
   form.append('type', type)
   if (title) form.append('title', title)
   if (subtitle) form.append('subtitle', subtitle)
-  const res = await fetch('/api/admin/banners', {
+  const res = await fetch(`${adminApi()}/api/admin/banners`, {
     method: 'POST',
     headers: authHeader(),
     body: form,
@@ -169,7 +171,7 @@ export async function adminUploadBanner(
 }
 
 export async function adminDeleteBanner(id: number) {
-  const res = await fetch(`/api/admin/banners/${id}`, {
+  const res = await fetch(`${adminApi()}/api/admin/banners/${id}`, {
     method: 'DELETE',
     headers: authHeader(),
   })
@@ -177,7 +179,7 @@ export async function adminDeleteBanner(id: number) {
 }
 
 export async function adminToggleBanner(id: number) {
-  const res = await fetch(`/api/admin/banners/${id}/toggle`, {
+  const res = await fetch(`${adminApi()}/api/admin/banners/${id}/toggle`, {
     method: 'POST',
     headers: authHeader(),
   })
@@ -186,13 +188,13 @@ export async function adminToggleBanner(id: number) {
 
 // Categories
 export async function adminGetCategories(): Promise<Category[]> {
-  const res = await fetch('/api/admin/categories', { headers: authHeader() })
+  const res = await fetch(`${adminApi()}/api/admin/categories`, { headers: authHeader() })
   if (!res.ok) throw new Error('Unauthorized')
   return res.json()
 }
 
 export async function adminCreateCategory(data: object): Promise<Category> {
-  const res = await fetch('/api/admin/categories', {
+  const res = await fetch(`${adminApi()}/api/admin/categories`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...authHeader() },
     body: JSON.stringify(data),
@@ -203,7 +205,7 @@ export async function adminCreateCategory(data: object): Promise<Category> {
 }
 
 export async function adminUpdateCategory(id: number, data: object): Promise<Category> {
-  const res = await fetch(`/api/admin/categories/${id}`, {
+  const res = await fetch(`${adminApi()}/api/admin/categories/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...authHeader() },
     body: JSON.stringify(data),
@@ -214,7 +216,7 @@ export async function adminUpdateCategory(id: number, data: object): Promise<Cat
 }
 
 export async function adminDeleteCategory(id: number) {
-  const res = await fetch(`/api/admin/categories/${id}`, {
+  const res = await fetch(`${adminApi()}/api/admin/categories/${id}`, {
     method: 'DELETE',
     headers: authHeader(),
   })
@@ -223,13 +225,13 @@ export async function adminDeleteCategory(id: number) {
 
 // Collections
 export async function adminGetCollections(): Promise<Collection[]> {
-  const res = await fetch('/api/admin/collections', { headers: authHeader() })
+  const res = await fetch(`${adminApi()}/api/admin/collections`, { headers: authHeader() })
   if (!res.ok) throw new Error('Unauthorized')
   return res.json()
 }
 
 export async function adminCreateCollection(form: FormData): Promise<Collection> {
-  const res = await fetch('/api/admin/collections', {
+  const res = await fetch(`${adminApi()}/api/admin/collections`, {
     method: 'POST',
     headers: authHeader(),
     body: form,
@@ -240,7 +242,7 @@ export async function adminCreateCollection(form: FormData): Promise<Collection>
 }
 
 export async function adminUpdateCollection(id: number, form: FormData): Promise<Collection> {
-  const res = await fetch(`/api/admin/collections/${id}`, {
+  const res = await fetch(`${adminApi()}/api/admin/collections/${id}`, {
     method: 'POST', // PHP only parses multipart for GET/POST; route accepts both PUT and POST
     headers: authHeader(),
     body: form,
@@ -251,7 +253,7 @@ export async function adminUpdateCollection(id: number, form: FormData): Promise
 }
 
 export async function adminDeleteCollection(id: number) {
-  const res = await fetch(`/api/admin/collections/${id}`, {
+  const res = await fetch(`${adminApi()}/api/admin/collections/${id}`, {
     method: 'DELETE',
     headers: authHeader(),
   })
@@ -259,7 +261,7 @@ export async function adminDeleteCollection(id: number) {
 }
 
 export async function adminToggleCollection(id: number) {
-  const res = await fetch(`/api/admin/collections/${id}/toggle`, {
+  const res = await fetch(`${adminApi()}/api/admin/collections/${id}/toggle`, {
     method: 'POST',
     headers: authHeader(),
   })
