@@ -3,7 +3,7 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "bash docker-entrypoint.sh"
+startCommand = "sh /usr/local/bin/docker-entrypoint.sh php-fpm"
 healthcheckPath = "/api/products"
 healthcheckTimeout = 60
 restartPolicyType = "ON_FAILURE"
