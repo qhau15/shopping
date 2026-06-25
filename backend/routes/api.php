@@ -8,6 +8,9 @@ use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Route;
 
+// Health check (no DB needed)
+Route::get('/health', fn() => response()->json(['status' => 'ok']));
+
 // Public routes
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
