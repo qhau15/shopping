@@ -26,7 +26,7 @@ export default function AdminBannersPage() {
   useEffect(() => {
     adminGetBanners()
       .then(setBanners)
-      .catch(() => router.push('/admin/login'))
+      .catch(() => router.push('/tmt/admin/login'))
       .finally(() => setLoading(false))
   }, [])
 

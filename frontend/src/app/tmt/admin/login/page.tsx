@@ -23,7 +23,7 @@ export default function LoginPage() {
         return
       }
       localStorage.setItem('admin_token', data.token)
-      router.push('/admin/products')
+      router.push('/tmt/admin/products')
     } catch {
       setError('Có lỗi xảy ra, vui lòng thử lại')
     } finally {

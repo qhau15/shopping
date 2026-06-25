@@ -232,7 +232,7 @@ export default function CollectionsPage() {
     try {
       setCollections(await adminGetCollections())
     } catch {
-      router.replace('/admin/login')
+      router.replace('/tmt/admin/login')
     } finally {
       setLoading(false)
     }

@@ -74,7 +74,7 @@ export default function AdminProductsPage() {
     try {
       setProducts(await adminGetProducts())
     } catch {
-      router.push('/admin/login')
+      router.push('/tmt/admin/login')
     } finally {
       setLoading(false)
     }
@@ -159,7 +159,7 @@ export default function AdminProductsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Sản phẩm</h1>
-        <Link href="/admin/products/new" className="inline-flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors">
+        <Link href="/tmt/admin/products/new" className="inline-flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
@@ -340,7 +340,7 @@ export default function AdminProductsPage() {
 
                       {/* Actions */}
                       <td className="px-4 py-3 text-right">
-                        <Link href={`/admin/products/${p.id}/edit`} className="text-xs text-blue-500 hover:text-blue-700 font-medium">
+                        <Link href={`/tmt/admin/products/${p.id}/edit`} className="text-xs text-blue-500 hover:text-blue-700 font-medium">
                           Sửa
                         </Link>
                       </td>

@@ -193,7 +193,7 @@ export default function ProductForm({ product }: Props) {
         }
       }
 
-      router.push('/admin/products')
+      router.push('/tmt/admin/products')
     } catch (err: any) {
       setError(err.message || 'Có lỗi xảy ra')
     } finally {

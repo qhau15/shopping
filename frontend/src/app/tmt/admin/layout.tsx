@@ -10,25 +10,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter()
 
   useEffect(() => {
-    if (pathname !== '/admin/login' && !localStorage.getItem('admin_token')) {
-      router.replace('/admin/login')
+    if (pathname !== '/tmt/admin/login' && !localStorage.getItem('admin_token')) {
+      router.replace('/tmt/admin/login')
     }
   }, [pathname, router])
 
-  if (pathname === '/admin/login') {
+  if (pathname === '/tmt/admin/login') {
     return <>{children}</>
   }
 
   const handleLogout = async () => {
     await adminLogout()
-    router.push('/admin/login')
+    router.push('/tmt/admin/login')
   }
 
   const navItems = [
-    { href: '/admin/products', label: '🛍️ Sản phẩm' },
-    { href: '/admin/collections', label: '✨ Bộ sưu tập' },
-    { href: '/admin/categories', label: '🏷️ Danh mục' },
-    { href: '/admin/banners', label: '🖼️ Banner' },
+    { href: '/tmt/admin/products', label: '🛍️ Sản phẩm' },
+    { href: '/tmt/admin/collections', label: '✨ Bộ sưu tập' },
+    { href: '/tmt/admin/categories', label: '🏷️ Danh mục' },
+    { href: '/tmt/admin/banners', label: '🖼️ Banner' },
   ]
 
   return (
@@ -36,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className="w-56 bg-white shadow-sm flex flex-col">
         <div className="p-5 border-b border-gray-100">
-          <Link href="/admin" className="text-rose-600 font-bold text-base leading-tight">𝓣𝓻𝓪𝓷 𝓜𝓲𝓷𝓱 𝓣𝓻𝓪𝓷𝓰</Link>
+          <Link href="/tmt/admin" className="text-rose-600 font-bold text-base leading-tight">𝓣𝓻𝓪𝓷 𝓜𝓲𝓷𝓱 𝓣𝓻𝓪𝓷𝓰</Link>
           <p className="text-xs text-gray-400 mt-1">Quản trị</p>
         </div>
 

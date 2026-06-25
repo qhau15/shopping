@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
         if (Admin::count() === 0) {
             Admin::create([
                 'email' => 'admin@shop.com',
-                'password' => Hash::make('Admin@123'),
+                'password' => Hash::make('mUCPNbypxmccUgKOk9UIlg'),
             ]);
-            $this->command->info('Admin created: admin@shop.com / Admin@123');
+            $this->command->info('Admin created: admin@shop.com / mUCPNbypxmccUgKOk9UIlg');
         }
 
         if (Category::count() === 0) {
