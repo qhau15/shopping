@@ -20,11 +20,17 @@ class ProductImage extends Model
 
     public function getUrlAttribute(): string
     {
+        if (str_starts_with($this->path, 'http')) {
+            return $this->path;
+        }
         return \Illuminate\Support\Facades\Storage::disk('public')->url($this->path);
     }
 
     public function getThumbUrlAttribute(): string
     {
+        if (str_starts_with($this->thumb_path, 'http')) {
+            return $this->thumb_path;
+        }
         return \Illuminate\Support\Facades\Storage::disk('public')->url($this->thumb_path);
     }
 }

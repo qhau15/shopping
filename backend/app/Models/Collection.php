@@ -16,8 +16,10 @@ class Collection extends Model
 
     public function getCoverUrlAttribute(): ?string
     {
-        return $this->cover_image_path
-            ? \Illuminate\Support\Facades\Storage::disk('public')->url($this->cover_image_path)
-            : null;
+        if (!$this->cover_image_path) return null;
+        if (str_starts_with($this->cover_image_path, 'http')) {
+            return $this->cover_image_path;
+        }
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($this->cover_image_path);
     }
 }

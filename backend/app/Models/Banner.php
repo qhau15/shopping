@@ -14,6 +14,9 @@ class Banner extends Model
 
     public function getUrlAttribute(): string
     {
+        if (str_starts_with($this->image_path, 'http')) {
+            return $this->image_path;
+        }
         return \Illuminate\Support\Facades\Storage::disk('public')->url($this->image_path);
     }
 }
