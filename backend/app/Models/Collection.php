@@ -17,7 +17,7 @@ class Collection extends Model
     public function getCoverUrlAttribute(): ?string
     {
         return $this->cover_image_path
-            ? '/storage/' . $this->cover_image_path
+            ? \Illuminate\Support\Facades\Storage::disk('public')->url($this->cover_image_path)
             : null;
     }
 }
