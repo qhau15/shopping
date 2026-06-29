@@ -14,6 +14,6 @@ class Banner extends Model
 
     public function getUrlAttribute(): string
     {
-        return '/storage/' . $this->image_path;
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($this->image_path);
     }
 }
